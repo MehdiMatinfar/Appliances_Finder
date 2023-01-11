@@ -96,7 +96,7 @@
   const indexes = new Array();
   if (type.trim() === 'modern') {
 
-     fetch("./modern/test_modern.csv").then(res => {
+     fetch("test_modern.csv").then(res => {
 
 
       return res.text();
@@ -132,7 +132,7 @@
   }
   else if (type == 'lux') {
 
-    var p = fetch("./lux/test_lux.csv").then(res => {
+    var p = fetch("test_lux.csv").then(res => {
 
 
       return res.text();
@@ -165,7 +165,7 @@
   }
   else if (type == 'classic') {
 
-    var p = fetch("./classic/test_classic.csv").then(res => {
+    var p = fetch("test_classic.csv").then(res => {
 
 
     
