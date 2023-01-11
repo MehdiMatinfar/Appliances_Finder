@@ -1,0 +1,205 @@
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+
+
+  <meta name="apple-mobile-web-app-title" content="CodePen">
+
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;900&display=swap');
+
+    body {
+      background-color: #212529;
+
+      font-family: 'Poppins', sans-serif;
+      font-weight: 200;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      -moz-osx-font-smoothing: grayscale;
+
+    }
+
+    .album img {
+      width: 300px;
+      height: 300px;
+      border-radius: 4%;
+      overflow: hidden;
+      margin-right: 8px;
+      margin-bottom: 8px;
+      display: inline-block;
+
+    }
+  </style>
+
+
+
+  <title>CodePen - Pure CSS albums gallery</title>
+
+
+
+
+
+
+
+
+</head>
+
+<body translate="no">
+  <center>
+    <div id="main " style="margin-top:170px;" class="container">
+      <h1 style="color: white;">Your Result</h3>
+        <div id="gallery " class="row">
+          <div class="col-xs-4 gallery-item">
+            <div class="album" id="album">
+              <!-- <img src="rug/rug(122).jpg" alt="">
+              <img src="rug/rug(107).jpg" alt="">
+              <img src="rug/rug(106).jpg" alt=""> -->
+            </div>
+          </div>
+
+        </div>
+    </div>
+  </center>
+
+</body>
+<script>
+
+
+
+  function getQueryStrings() {
+    var assoc = {};
+    var decode = function (s) { return decodeURIComponent(s.replace(/\+/g, " ")); };
+    var queryString = location.search.substring(1);
+    var keyValues = queryString.split('&');
+
+    for (var i in keyValues) {
+      var key = keyValues[i].split('=');
+      if (key.length > 1) {
+        assoc[decode(key[0])] = decode(key[1]);
+      }
+    }
+
+    return assoc;
+  }
+
+  var qs = getQueryStrings();
+  var budget = qs["budget"];
+  var type = qs["type"];
+  var position = qs["position"];
+  position = position.toLowerCase();
+  const indexes = new Array();
+  if (type.trim() === 'modern') {
+
+     fetch("./modern/test_modern.csv").then(res => {
+
+
+      return res.text();
+    }).then(data => {
+      let result = data.split('\n');
+
+      for (var i = 1; i < result.length; i++) {
+
+        var line = result[i].split(',');
+
+        if (Number(line[1]) >= Number(budget) && line[2].trim() === position.trim()) {
+          indexes.push(line[0]);
+
+
+        }
+        
+      }
+
+      let text="";
+      for (var k = 0; k < indexes.length; k++) {
+
+        text+=`<img  src="./modern/test/${indexes[k]}.jpg" alt="">`;
+      }
+              document.getElementById("album").innerHTML = text;
+
+    })
+
+    
+   
+
+
+
+  }
+  else if (type == 'lux') {
+
+    var p = fetch("./lux/test_lux.csv").then(res => {
+
+
+      return res.text();
+    }).then(data => {
+      let result = data.split('\n');
+
+      for (var i = 1; i < result.length; i++) {
+
+        var line = result[i].split(',');
+
+        if (Number(line[1]) >= Number(budget) && line[2].trim() === position.trim()) {
+          indexes.push(line[0]);
+
+
+        }
+        
+      }
+
+      let text="";
+      for (var k = 0; k < indexes.length; k++) {
+
+        text+=`<img  src="./lux/test/${indexes[k]}.jpg" alt="">`;
+      }
+              document.getElementById("album").innerHTML = text;
+
+    })
+
+    
+   
+  }
+  else if (type == 'classic') {
+
+    var p = fetch("./classic/test_classic.csv").then(res => {
+
+
+    
+      return res.text();
+    }).then(data => {
+      let result = data.split('\n');
+
+      for (var i = 1; i < result.length; i++) {
+
+        var line = result[i].split(',');
+
+        if (Number(line[1]) >= Number(budget) && line[2].trim() === position.trim()) {
+          indexes.push(line[0]);
+
+
+        }
+        
+      }
+
+      let text="";
+      for (var k = 0; k < indexes.length; k++) {
+
+        text+=`<img  src="./classic/test/${indexes[k]}.jpg" alt="">`;
+      }
+              document.getElementById("album").innerHTML = text;
+
+    })
+
+    
+   
+  }
+
+
+
+</script>
+
+</html>
